@@ -1,11 +1,13 @@
 const express = require('express');
 const path = require('path');
+const dbgr=require('debug')("development:app");
 const usersRoute = require('./routes/usersRoute');
 const productsRoute = require('./routes/productsRoute');
 const ownersRoute = require('./routes/ownersRoute');
 const session = require('express-session');
 const config = require('config');
 const mongooseconnection=require('./config/mongoose-connection');
+const flash = require('connect-flash');
 const app = express();
 
 app.use(express.json());
@@ -19,16 +21,21 @@ app.use(session({
     resave: false,
     saveUninitialized: true,
 }));
-
+app.use(flash()); 
 
 app.use('/users', usersRoute);
 app.use('/products', productsRoute);
 app.use('/owners', ownersRoute);
 
 app.get('/', (req, res) => {
-    res.send('working');
+let error=req.flash('error');
+ res.render('index',{error});
 });
 
+app.get('/shop',(req,res)=>{
+    res.send('welcome to the shop');
+})
+
 app.listen(3000, () => {
-    console.log('App is listening on port 3000');
+    dbgr('App is listening on port 3000');
 });
