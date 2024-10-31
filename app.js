@@ -6,14 +6,17 @@ const productsRoute = require('./routes/productsRoute');
 const ownersRoute = require('./routes/ownersRoute');
 const session = require('express-session');
 const config = require('config');
+const isLoggedIn=require('./middlewares/isLoggedIn')
 const mongooseconnection=require('./config/mongoose-connection');
 const flash = require('connect-flash');
+const cookieparser=require('cookie-parser');
 const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.set('view engine', 'ejs');
+app.use(cookieparser());
 require('dotenv').config();
 
 app.use(session({
@@ -32,7 +35,7 @@ let error=req.flash('error');
  res.render('index',{error});
 });
 
-app.get('/shop',(req,res)=>{
+app.get('/shop',isLoggedIn,(req,res)=>{
     res.send('welcome to the shop');
 })
 
