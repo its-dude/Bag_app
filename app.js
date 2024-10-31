@@ -4,7 +4,8 @@ const usersRoute = require('./routes/usersRoute');
 const productsRoute = require('./routes/productsRoute');
 const ownersRoute = require('./routes/ownersRoute');
 const session = require('express-session');
-const config = require('config'); // Ensure this package is installed
+const config = require('config');
+const mongooseconnection=require('./config/mongoose-connection');
 const app = express();
 
 app.use(express.json());
