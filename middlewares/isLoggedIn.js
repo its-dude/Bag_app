@@ -1,7 +1,7 @@
 const usermodel=require('../models/usermodel');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-
+const dbgr = require('debug')("development:isLoggedIn");
 
 module.exports=async (req,res,next)=>{
   if(!req.cookies.token){
@@ -10,13 +10,12 @@ module.exports=async (req,res,next)=>{
   }
 
   try{
-    let {email,userid}=jwt.verify(req.cookies.token,Process.env.JWT_TOKEN);
+    let {email,userid}=jwt.verify(req.cookies.token,process.env.JWT_TOKEN);
     let user=await usermodel.findOne({email}).select("-password");
     req.user=user;
     next();
-  }
-  catch(err){
-    req.flash("error","something went wrong");
+  }catch(err){
+    req.flash("error","error in logging");
     res.redirect('/')
   }
 }

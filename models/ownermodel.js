@@ -2,12 +2,7 @@ const mongoose = require('mongoose');
 
 // Define the Owner Schema
 const ownerSchema = new mongoose.Schema({
-    fullName: {
-        type: String,
-        required: true,
-        trim: true
-    },
-    username: {
+    fullname: {
         type: String,
         required: true,
         trim: true
@@ -28,7 +23,6 @@ const ownerSchema = new mongoose.Schema({
     },
     contact: {
         type: String,
-        required: true,
         trim: true
     },
     products: [

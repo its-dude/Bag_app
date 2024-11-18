@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 // Define the Product Schema
 const productSchema = new mongoose.Schema({
     image: {
-        type: String,  // URL or file path to the product image
+        type: Buffer,  
         required: true
     },
     name: {
